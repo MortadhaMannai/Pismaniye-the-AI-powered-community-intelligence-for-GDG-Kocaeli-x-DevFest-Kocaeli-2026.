@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pismaniye"
+version = "1.0.0"
+description = "Pismaniye — AI-Powered Multi-Agent Community Intelligence & Concierge Platform for GDG Kocaeli & DevFest Kocaeli 2026"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [
+    { name = "Mortadha Mannai", email = "mannaimortadha898@gmail.com" }
+]
+maintainers = [
+    { name = "Mortadha Mannai", email = "mannaimortadha898@gmail.com" }
+]
+keywords = [
+    "agentic-ai",
+    "multi-agent",
+    "langgraph",
+    "google-adk",
+    "gemini",
+    "vertex-ai",
+    "rag",
+    "explainable-ai",
+    "gdg-kocaeli",
+    "devfest",
+    "typer",
+    "rich",
+    "textual",
+    "fastapi",
+]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+    "textual>=0.70.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.2.0",
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "httpx>=0.27.0",
+    "langgraph>=0.2.0",
+    "langchain-core>=0.2.0",
+    "google-genai>=0.3.0",
+    "opentelemetry-api>=1.25.0",
+    "opentelemetry-sdk>=1.25.0",
+    "qrcode>=7.4.2",
+    "python-multipart>=0.0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026."
+Repository = "https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026."
+Documentation = "https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026.#readme"
+Issues = "https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026./issues"
+Author = "https://github.com/MortadhaMannai"
+
+[project.optional-dependencies]
+gcp = [
+    "google-adk>=0.1.0",
+    "google-cloud-aiplatform>=1.60.0",
+    "google-cloud-firestore>=2.16.0",
+    "google-cloud-storage>=2.17.0",
+]
+dev = [
+    "pytest>=8.2.0",
+    "pytest-asyncio>=0.23.0",
+    "mypy>=1.10.0",
+]
+
+[project.scripts]
+pismaniye = "pismaniye.cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pismaniye*"]
+
+[tool.setuptools.package-data]
+pismaniye = ["web/index.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = false
+warn_unused_configs = true
+ignore_missing_imports = true

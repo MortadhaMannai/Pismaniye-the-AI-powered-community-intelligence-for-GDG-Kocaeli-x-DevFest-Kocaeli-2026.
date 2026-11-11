@@ -1,0 +1,16 @@
+services:
+  pismaniye-web:
+    build: .
+    container_name: pismaniye-devfest-kocaeli
+    ports:
+      - "8080:8080"
+    environment:
+      - PISMANIYE_EVENT_ID=devfest-kocaeli-2026
+      - PISMANIYE_MODE=local_deterministic
+      - PISMANIYE_HOST=0.0.0.0
+      - PISMANIYE_PORT=8080
+    volumes:
+      - pismaniye_state:/app/.pismaniye_state
+
+volumes:
+  pismaniye_state:

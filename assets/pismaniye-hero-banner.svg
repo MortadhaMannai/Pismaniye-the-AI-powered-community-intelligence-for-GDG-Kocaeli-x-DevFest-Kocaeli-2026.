@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070B16" />
+      <stop offset="50%" stop-color="#0E172E" />
+      <stop offset="100%" stop-color="#141E3C" />
+    </linearGradient>
+    <linearGradient id="threadBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4285F4" stop-opacity="0.15" />
+      <stop offset="50%" stop-color="#4285F4" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#34A853" stop-opacity="0.2" />
+    </linearGradient>
+    <linearGradient id="threadRed" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA4335" stop-opacity="0.15" />
+      <stop offset="50%" stop-color="#FBBC04" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#4285F4" stop-opacity="0.2" />
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F8F4EC" />
+      <stop offset="50%" stop-color="#FFD57E" />
+      <stop offset="100%" stop-color="#F8F4EC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Obsidian / Navy Canvas -->
+  <rect width="1200" height="360" rx="20" fill="url(#bgGrad)" stroke="#23325B" stroke-width="2" />
+
+  <!-- Top 4-Color Google Developer Inspired Ribbon -->
+  <rect x="0" y="0" width="300" height="6" fill="#4285F4" />
+  <rect x="300" y="0" width="300" height="6" fill="#EA4335" />
+  <rect x="600" y="0" width="300" height="6" fill="#FBBC04" />
+  <rect x="900" y="0" width="300" height="6" fill="#34A853" />
+
+  <!-- Intertwined Pismaniye Silk Threads -->
+  <path d="M -50 280 C 250 180, 450 350, 750 220 C 950 140, 1100 290, 1250 200" fill="none" stroke="url(#threadBlue)" stroke-width="3.5" />
+  <path d="M -50 220 C 220 340, 500 140, 800 280 C 1000 350, 1120 170, 1250 250" fill="none" stroke="url(#threadRed)" stroke-width="3.5" />
+  <path d="M -50 250 C 300 290, 550 190, 850 240 C 1020 270, 1140 220, 1250 230" fill="none" stroke="#34A853" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="8 6" />
+
+  <!-- Decorative Agent Constellation Nodes -->
+  <circle cx="150" cy="95" r="6" fill="#4285F4" />
+  <circle cx="195" cy="70" r="5" fill="#EA4335" />
+  <circle cx="240" cy="105" r="6" fill="#FBBC04" />
+  <circle cx="285" cy="80" r="5" fill="#34A853" />
+  <line x1="150" y1="95" x2="195" y2="70" stroke="#4285F4" stroke-opacity="0.5" stroke-width="1.5" />
+  <line x1="195" y1="70" x2="240" y2="105" stroke="#EA4335" stroke-opacity="0.5" stroke-width="1.5" />
+  <line x1="240" y1="105" x2="285" y2="80" stroke="#FBBC04" stroke-opacity="0.5" stroke-width="1.5" />
+
+  <circle cx="915" cy="80" r="5" fill="#4285F4" />
+  <circle cx="960" cy="105" r="6" fill="#EA4335" />
+  <circle cx="1005" cy="70" r="5" fill="#FBBC04" />
+  <circle cx="1050" cy="95" r="6" fill="#34A853" />
+  <line x1="915" y1="80" x2="960" y2="105" stroke="#4285F4" stroke-opacity="0.5" stroke-width="1.5" />
+  <line x1="960" y1="105" x2="1005" y2="70" stroke="#FBBC04" stroke-opacity="0.5" stroke-width="1.5" />
+  <line x1="1005" y1="70" x2="1050" y2="95" stroke="#34A853" stroke-opacity="0.5" stroke-width="1.5" />
+
+  <!-- Community Pill -->
+  <rect x="410" y="42" width="380" height="32" rx="16" fill="#172344" stroke="#4285F4" stroke-width="1.2" />
+  <text x="600" y="63" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="13" font-weight="700" fill="#8AB4F8" text-anchor="middle" letter-spacing="1.5">
+    ✦ GDG KOCAELI • DEVFEST KOCAELI 2026 ✦
+  </text>
+
+  <!-- Main Title -->
+  <text x="600" y="148" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="68" font-weight="900" fill="url(#goldText)" text-anchor="middle" letter-spacing="8">
+    PISMANIYE
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="188" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="20" font-weight="600" fill="#4ECDC4" text-anchor="middle" letter-spacing="1">
+    AI-Powered Multi-Agent Community Intelligence &amp; Concierge Platform
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="222" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#FFD57E" text-anchor="middle">
+    "Unraveling People. Connecting Possibilities."
+  </text>
+
+  <!-- Feature Pills Bottom -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif" font-size="12.5" font-weight="700" text-anchor="middle">
+    <rect x="135" y="295" width="170" height="30" rx="8" fill="#131E3A" stroke="#4285F4" stroke-width="1" />
+    <text x="220" y="315" fill="#F8F4EC">◈ LangGraph + ADK</text>
+
+    <rect x="320" y="295" width="180" height="30" rx="8" fill="#131E3A" stroke="#EA4335" stroke-width="1" />
+    <text x="410" y="315" fill="#F8F4EC">● 6 Specialized Agents</text>
+
+    <rect x="515" y="295" width="170" height="30" rx="8" fill="#131E3A" stroke="#FBBC04" stroke-width="1" />
+    <text x="600" y="315" fill="#F8F4EC">▲ Hybrid Vector RAG</text>
+
+    <rect x="700" y="295" width="175" height="30" rx="8" fill="#131E3A" stroke="#A78BFA" stroke-width="1" />
+    <text x="787" y="315" fill="#F8F4EC">⚖ XAI Provenance Audit</text>
+
+    <rect x="890" y="295" width="175" height="30" rx="8" fill="#131E3A" stroke="#34A853" stroke-width="1" />
+    <text x="977" y="315" fill="#F8F4EC">🛡 Opt-In &amp; Consent Gate</text>
+  </g>
+</svg>

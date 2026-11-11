@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PISMANIYE — GDG Kocaeli & DevFest Kocaeli 2026 Community Intelligence</title>
+  <style>
+    :root {
+      --bg-deep: #090d1a;
+      --bg-surface: #11182c;
+      --bg-card: #16203a;
+      --bg-elevated: #1e2b4d;
+      --text-primary: #f8f4ec;
+      --text-secondary: #9aa5b8;
+      --g-blue: #4285F4;
+      --g-red: #EA4335;
+      --g-yellow: #FBBC04;
+      --g-green: #34A853;
+      --pismaniye-gold: #ffd57e;
+      --accent-purple: #a78bfa;
+      --accent-cyan: #4ecdc4;
+      --border-subtle: rgba(255, 255, 255, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.55;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Four-color Google Developer-inspired thread bar */
+    .thread-ribbon {
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(
+        90deg,
+        var(--g-blue) 0%, var(--g-blue) 25%,
+        var(--g-red) 25%, var(--g-red) 50%,
+        var(--g-yellow) 50%, var(--g-yellow) 75%,
+        var(--g-green) 75%, var(--g-green) 100%
+      );
+    }
+
+    header {
+      background: rgba(17, 24, 44, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.85rem 1.25rem;
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-knot {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: conic-gradient(from 45deg, var(--g-blue), var(--g-red), var(--g-yellow), var(--g-green), var(--g-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #090d1a;
+      box-shadow: 0 0 18px rgba(66, 133, 244, 0.35);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--pismaniye-gold);
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tab-btn.active {
+      color: var(--text-primary);
+      background: rgba(66, 133, 244, 0.2);
+      border-color: var(--g-blue);
+    }
+
+    .qr-trigger {
+      background: rgba(251, 188, 4, 0.16);
+      color: var(--g-yellow);
+      border: 1px solid rgba(251, 188, 4, 0.45);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .sample-banner {
+      background: rgba(251, 188, 4, 0.12);
+      border-bottom: 1px solid rgba(251, 188, 4, 0.3);
+      color: var(--pismaniye-gold);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.4rem 1rem;
+    }
+
+    main {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+      flex: 1;
+    }
+
+    .section-view { display: none; }
+    .section-view.active { display: block; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 1.25rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.1rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+      color: var(--text-primary);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-right: 0.35rem;
+      margin-bottom: 0.3rem;
+    }
+    .badge-blue { background: rgba(66, 133, 244, 0.2); color: #8ab4f8; border: 1px solid rgba(66, 133, 244, 0.4); }
+    .badge-green { background: rgba(52, 168, 83, 0.2); color: #81c995; border: 1px solid rgba(52, 168, 83, 0.4); }
+    .badge-yellow { background: rgba(251, 188, 4, 0.2); color: #fde293; border: 1px solid rgba(251, 188, 4, 0.4); }
+    .badge-red { background: rgba(234, 67, 53, 0.2); color: #f28b82; border: 1px solid rgba(234, 67, 53, 0.4); }
+    .badge-purple { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.4); }
+
+    .workflow-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .wf-pill {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.1s ease;
+    }
+    .wf-pill:hover {
+      border-color: var(--g-blue);
+      transform: translateY(-1px);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"], input[type="number"], select, textarea {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 0.65rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.92rem;
+    }
+
+    button.primary-btn {
+      background: var(--g-blue);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    button.primary-btn:hover { opacity: 0.92; }
+
+    button.success-btn {
+      background: var(--g-green);
+      color: #090d1a;
+      border: none;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.82rem;
+    }
+
+    .trace-step {
+      border-left: 3px solid var(--g-blue);
+      padding-left: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .response-box {
+      white-space: pre-wrap;
+      font-size: 0.92rem;
+      background: var(--bg-surface);
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      max-height: 540px;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 1rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--g-yellow);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    footer {
+      text-align: center;
+      padding: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+  <div class="thread-ribbon"></div>
+  <div class="sample-banner">
+    ⚠️ <strong>TRUST & DATA PROVENANCE NOTICE:</strong> Pre-loaded speakers, schedules, and venue rooms are labeled
+    <code>SYNTHETIC_SAMPLE</code> (fictional demonstration data) until verified by GDG Kocaeli organizers.
+    Private contact details are strictly protected and never exposed.
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-knot">P</div>
+        <div>
+          <div class="brand-title">PISMANIYE <span class="badge badge-blue">v1.0</span></div>
+          <div class="brand-sub">GDG Kocaeli • DevFest Kocaeli 2026 • "Unraveling People. Connecting Possibilities."</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('concierge')">🤖 Concierge & XAI</button>
+        <button class="tab-btn" onclick="switchTab('people')">👥 Speakers, GDEs & Matchmaker</button>
+        <button class="tab-btn" onclick="switchTab('schedule')">📅 Schedule & Agenda</button>
+        <button class="tab-btn" onclick="switchTab('kocaeli')">🌊 Discover Kocaeli</button>
+        <button class="tab-btn" onclick="switchTab('community')">🚀 Learning & Community</button>
+        <button class="tab-btn" onclick="switchTab('organizer')">🛠️ Organizer Dashboard</button>
+      </nav>
+
+      <button class="qr-trigger" onclick="toggleQrModal(true)">📱 Mobile QR</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- TAB 1: MULTI-AGENT CONCIERGE & LIVE XAI TRACE -->
+    <section id="tab-concierge" class="section-view active">
+      <div class="workflow-pills">
+        <button class="wf-pill" onclick="runSignatureWorkflow('workflow_a', 'I\'m interested in Agentic AI, Gemini, and production AI systems. Who should I meet?')">
+          <strong>Workflow A:</strong> Meet the Right Expert 🤝
+        </button>
+        <button class="wf-pill" onclick="runSignatureWorkflow('workflow_b', 'Create my ideal DevFest agenda. I\'m interested in Google Cloud and AI.')">
+          <strong>Workflow B:</strong> My DevFest Day 📅
+        </button>
+        <button class="wf-pill" onclick="runSignatureWorkflow('workflow_c', 'I\'m a visiting GDE. I have three free hours. Help me discover Kocaeli.')">
+          <strong>Workflow C:</strong> Discover Kocaeli (3h) 🌊
+        </button>
+        <button class="wf-pill" onclick="runSignatureWorkflow('workflow_d', 'I want to start learning Agentic AI after DevFest.')">
+          <strong>Workflow D:</strong> Post-DevFest Learning Path 🚀
+        </button>
+      </div>
+
+      <div class="input-row">
+        <input type="text" id="chat-input" placeholder="Ask Pismaniye's 6 specialized agents anything..." value="I'm interested in Agentic AI, Gemini, and production AI systems. Who should I meet?" />
+        <button class="primary-btn" onclick="submitChat()">Run Agents ⚡</button>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>✦ Synthesized Grounded Response</h3>
+          <div id="chat-meta" style="margin-bottom: 0.6rem; font-size: 0.8rem; color: var(--text-secondary);"></div>
+          <div id="chat-response" class="response-box">Select a workflow above or click "Run Agents ⚡" to watch the 6 specialized agents + XAI Auditor collaborate.</div>
+          <div id="consent-actions" style="margin-top: 0.85rem;"></div>
+        </div>
+
+        <div class="card">
+          <h3>⚖️ Live Agent Execution Graph & XAI Audit</h3>
+          <div id="trace-steps-container" style="margin-top: 0.65rem;"></div>
+          <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: 0.85rem 0;" />
+          <h3>📚 RAG Citations & Privacy Checks</h3>
+          <div id="xai-details-container" style="margin-top: 0.5rem; font-size: 0.83rem;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: SPEAKERS, GDEs & MATCHMAKER -->
+    <section id="tab-people" class="section-view">
+      <div class="card" style="margin-bottom: 1.2rem;">
+        <h3>🔍 Opt-In Speaker, GDE & Community Directory</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+          Strict Privacy Enforcement: Only explicitly opted-in members appear here. Private email and phone numbers are never exposed.
+        </p>
+        <div class="input-row">
+          <input type="text" id="people-filter" placeholder="Filter by interest or technology (e.g., Agentic AI, Gemini, Google Cloud, LangGraph)..." />
+          <button class="primary-btn" onclick="loadPeople()">Search Directory</button>
+          <button class="primary-btn" style="background: var(--accent-purple);" onclick="runMatchmakerFromTab()">Score Matches ♾</button>
+        </div>
+      </div>
+      <div id="people-grid" class="cards-grid"></div>
+    </section>
+
+    <!-- TAB 3: SCHEDULE & CONFLICT-FREE AGENDA BUILDER -->
+    <section id="tab-schedule" class="section-view">
+      <div class="card" style="margin-bottom: 1.2rem;">
+        <h3>📅 DevFest Kocaeli 2026 Schedule & Conflict-Free Agenda Builder</h3>
+        <div class="input-row" style="margin-top: 0.6rem;">
+          <input type="text" id="agenda-interests" placeholder="Enter your interests (e.g., Google Cloud, AI, Agentic AI, RAG)..." value="Google Cloud, AI" />
+          <button class="primary-btn" onclick="loadSchedule(true)">Build My Ideal Agenda</button>
+          <button class="tab-btn" onclick="loadSchedule(false)">Show All Sessions</button>
+        </div>
+        <div id="venue-banner" style="font-size: 0.83rem; color: var(--pismaniye-gold);"></div>
+      </div>
+      <div id="conflict-banner"></div>
+      <div id="schedule-grid" class="cards-grid"></div>
+    </section>
+
+    <!-- TAB 4: DISCOVER KOCAELI -->
+    <section id="tab-kocaeli" class="section-view">
+      <div class="card" style="margin-bottom: 1.2rem;">
+        <h3>🌊 Kocaeli Local Concierge — Time-Boxed Cultural & Culinary Itinerary</h3>
+        <div class="input-row" style="margin-top: 0.6rem;">
+          <input type="number" id="kocaeli-hours" value="3" min="1" max="12" step="0.5" style="max-width: 160px;" />
+          <button class="primary-btn" onclick="loadKocaeli()">Plan Itinerary (Hours)</button>
+        </div>
+        <div id="kocaeli-summary" style="font-size: 0.88rem; color: var(--accent-cyan);"></div>
+      </div>
+      <div id="kocaeli-grid" class="cards-grid"></div>
+    </section>
+
+    <!-- TAB 5: COMMUNITY & LEARNING PATHS -->
+    <section id="tab-community" class="section-view">
+      <div class="grid-2">
+        <div>
+          <h3 style="margin-bottom: 0.6rem;">🚀 Post-DevFest Learning Pathway & GDG Kocaeli Resources</h3>
+          <div id="community-list" class="cards-grid" style="grid-template-columns: 1fr;"></div>
+        </div>
+        <div class="card">
+          <h3>💡 Contribute a Community Resource or Talk Idea</h3>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
+            Submissions enter the Organizer Moderation Queue before indexing into the Knowledge Base.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+            <input type="text" id="sub-name" placeholder="Your Name" />
+            <input type="text" id="sub-title" placeholder="Resource or Lightning Talk Title" />
+            <input type="text" id="sub-tags" placeholder="Tags (comma-separated, e.g. Agentic AI, Gemini)" />
+            <textarea id="sub-content" rows="3" placeholder="Description and verified link..."></textarea>
+            <button class="primary-btn" onclick="submitCommunityContribution()">Submit for Organizer Moderation</button>
+            <div id="sub-status" style="font-size: 0.82rem; color: var(--g-green);"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: ORGANIZER DASHBOARD -->
+    <section id="tab-organizer" class="section-view">
+      <div class="card" style="margin-bottom: 1.2rem;">
+        <h3>🛠️ GDG Kocaeli Organizer Dashboard (RBAC Protected)</h3>
+        <div class="input-row" style="margin-top: 0.6rem;">
+          <input type="password" id="org-token" value="" autocomplete="off" placeholder="Enter Organizer RBAC Token (from presentation / .env)" />
+          <button class="primary-btn" onclick="loadOrganizerAnalytics()">Refresh Analytics & Audit Log</button>
+          <button class="success-btn" onclick="exportEventReport()">Export JSON Report ⬇</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Add Verified Speaker / Session -->
+        <div class="card">
+          <h3>➕ Import Verified Speaker / GDE Profile</h3>
+          <div style="display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.6rem;">
+            <input type="text" id="org-spk-name" placeholder="Full Name (e.g. Prof. Barış Yılmaz)" />
+            <input type="text" id="org-spk-headline" placeholder="Headline (e.g. Google Developer Expert in Cloud AI)" />
+            <input type="text" id="org-spk-org" placeholder="Organization (e.g. Kocaeli University)" />
+            <input type="text" id="org-spk-tags" placeholder="Interests & Expertise (comma-separated: Agentic AI, Gemini)" />
+            <textarea id="org-spk-bio" rows="2" placeholder="Verified speaker biography..."></textarea>
+            <button class="primary-btn" onclick="organizerAddSpeaker()">Save as VERIFIED_ORGANIZER_DATA ✔</button>
+            <div id="org-spk-msg" style="font-size: 0.82rem; color: var(--g-green);"></div>
+          </div>
+
+          <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: 1rem 0;" />
+          <h3>➕ Add Verified Schedule Session</h3>
+          <div style="display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.6rem;">
+            <input type="text" id="org-sess-title" placeholder="Session Title" />
+            <div class="input-row" style="margin-bottom: 0;">
+              <input type="text" id="org-sess-start" value="17:00" placeholder="Start (17:00)" />
+              <input type="text" id="org-sess-end" value="17:45" placeholder="End (17:45)" />
+            </div>
+            <input type="text" id="org-sess-room" value="Main Hall — Pişmaniye Stage" placeholder="Room" />
+            <input type="text" id="org-sess-tags" value="Agentic AI, Gemini, Google Cloud" placeholder="Tags" />
+            <textarea id="org-sess-abs" rows="2" placeholder="Session abstract..."></textarea>
+            <button class="primary-btn" onclick="organizerAddSession()">Publish Session & Index into RAG ✔</button>
+          </div>
+        </div>
+
+        <!-- Moderation, Edition Reset & Analytics -->
+        <div class="card">
+          <h3>📊 Live Telemetry, Moderation Queue & Edition Lifecycle</h3>
+          <div id="org-analytics-box" class="response-box" style="max-height: 250px; margin-bottom: 0.8rem;">Loading organizer telemetry...</div>
+
+          <h3>🛡️ Pending Community Moderation Queue</h3>
+          <div id="org-moderation-list" style="margin: 0.6rem 0;"></div>
+
+          <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: 1rem 0;" />
+          <h3>♻️ Reusable Edition Reset (Prepare for DevFest Kocaeli 2027)</h3>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.6rem;">
+            Resets event-specific sessions & temporary introductions while preserving GDG Kocaeli's local guides and learning resources.
+          </p>
+          <div class="input-row">
+            <input type="text" id="reset-event-id" value="devfest-kocaeli-2027" />
+            <input type="text" id="reset-event-name" value="DevFest Kocaeli 2027" />
+            <button class="primary-btn" style="background: var(--g-red);" onclick="organizerResetEdition()">Reset for 2027</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- QR CODE MODAL -->
+  <div id="qr-modal" class="modal-backdrop" onclick="toggleQrModal(false)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <h3 style="margin-bottom: 0.5rem;">📱 Scan to Open Pismaniye Mobile Concierge</h3>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        "Unraveling People. Connecting Possibilities."
+      </p>
+      <div style="background: #fff; padding: 1rem; border-radius: 12px; display: inline-block; margin-bottom: 1rem;">
+        <img src="/api/qr.svg" alt="Pismaniye QR Code" style="width: 210px; height: 210px;" />
+      </div>
+      <div>
+        <button class="primary-btn" onclick="toggleQrModal(false)">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    PISMANIYE — Built for <strong>GDG Kocaeli</strong> & <strong>DevFest Kocaeli 2026</strong> •
+    <em>"One community. Many threads. Infinite possibilities."</em>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tabs .tab-btn').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
+      const btns = document.querySelectorAll('.nav-tabs .tab-btn');
+      const map = { concierge: 0, people: 1, schedule: 2, kocaeli: 3, community: 4, organizer: 5 };
+      if (btns[map[tabId]]) btns[map[tabId]].classList.add('active');
+
+      if (tabId === 'people') loadPeople();
+      if (tabId === 'schedule') loadSchedule(false);
+      if (tabId === 'kocaeli') loadKocaeli();
+      if (tabId === 'community') loadCommunity();
+      if (tabId === 'organizer') loadOrganizerAnalytics();
+    }
+
+    function escapeHtml(val) {
+      return String(val ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function toggleQrModal(open) {
+      const m = document.getElementById('qr-modal');
+      if (open) m.classList.add('open');
+      else m.classList.remove('open');
+    }
+
+    function badgeForVerification(status) {
+      if (status === 'VERIFIED_ORGANIZER_DATA') {
+        return '<span class="badge badge-green">✔ VERIFIED ORGANIZER DATA</span>';
+      }
+      if (status === 'GENERATED_SUGGESTION') {
+        return '<span class="badge badge-blue">✦ AI SUGGESTION</span>';
+      }
+      return '<span class="badge badge-yellow">⚠ SAMPLE / FICTIONAL DATA</span>';
+    }
+
+    async function runSignatureWorkflow(workflowCode, queryText) {
+      document.getElementById('chat-input').value = queryText;
+      await submitChat(workflowCode);
+    }
+
+    async function submitChat(explicitWorkflow = null) {
+      const query = document.getElementById('chat-input').value.trim();
+      if (!query) return;
+      document.getElementById('chat-response').textContent = 'Spinning multi-agent threads (LangGraph + Google ADK + Hybrid RAG + XAI Auditor)...';
+      document.getElementById('trace-steps-container').innerHTML = '';
+      document.getElementById('xai-details-container').innerHTML = '';
+      document.getElementById('consent-actions').innerHTML = '';
+
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, workflow: explicitWorkflow })
+      });
+      const data = await res.json();
+      const trace = data.trace;
+
+      document.getElementById('chat-meta').innerHTML =
+        `<span class="badge badge-blue">Trace: ${trace.trace_id}</span>` +
+        `<span class="badge badge-purple">Decision: ${trace.decision_id}</span>` +
+        `<span class="badge badge-green">Workflow: ${trace.workflow_name} (${trace.total_duration_ms} ms)</span>`;
+
+      document.getElementById('chat-response').textContent = trace.final_response_markdown;
+
+      // Render Consent Gate buttons if Matchmaker produced introductions
+      const matches = (trace.structured_payload.matchmaker_agent || {}).matches || [];
+      if (matches.length > 0) {
+        let html = '<div style="margin-top:0.5rem;"><strong>🔒 Explicit Introduction Consent Gate:</strong><div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.4rem;">';
+        for (const m of matches) {
+          html += `<button class="success-btn" onclick="grantIntroConsent('${m.consent_request_id}', '${m.person.full_name.replace(/'/g, "")}')">Grant Consent to Introduce to ${m.person.full_name} (${m.consent_request_id})</button>`;
+        }
+        html += '</div></div>';
+        document.getElementById('consent-actions').innerHTML = html;
+      }
+
+      // Render execution steps
+      let stepsHtml = '';
+      for (const step of trace.steps) {
+        const tools = (step.tool_calls || []).map(t => `<code>${t.tool_name}</code> (${t.items_returned} items)`).join(', ');
+        stepsHtml += `
+          <div class="trace-step">
+            <div><strong>${step.agent_label}</strong> <span class="badge badge-green">${step.duration_ms} ms</span> <span class="badge badge-blue">Conf: ${Math.round(step.confidence * 100)}%</span></div>
+            <div style="color:var(--text-secondary);">${step.thought}</div>
+            ${tools ? `<div style="color:var(--accent-cyan);">⚙ Tools: ${tools}</div>` : ''}
+          </div>
+        `;
+      }
+      document.getElementById('trace-steps-container').innerHTML = stepsHtml;
+
+      // Render XAI details
+      if (trace.explanation) {
+        const exp = trace.explanation;
+        let xaiHtml = `<div style="margin-bottom:0.5rem;"><span class="badge badge-yellow">Epistemic Uncertainty: ${(exp.uncertainty_score * 100).toFixed(1)}%</span></div>`;
+        for (const c of (exp.evidence_citations || [])) {
+          xaiHtml += `<div style="margin-bottom:0.35rem;">📚 <strong>${c.source_title}</strong> (score=${c.relevance_score}) ${badgeForVerification(c.verification_status)}</div>`;
+        }
+        for (const p of (exp.privacy_checks_passed || [])) {
+          xaiHtml += `<div style="color:#81c995;">✔ ${p}</div>`;
+        }
+        document.getElementById('xai-details-container').innerHTML = xaiHtml;
+      }
+    }
+
+    async function grantIntroConsent(introId, targetName) {
+      const res = await fetch(`/api/introductions/${introId}/consent`, { method: 'POST' });
+      const data = await res.json();
+      alert(`✔ Explicit consent granted for ${introId} -> ${targetName}!\nStatus: ${data.introduction.status}\n${data.privacy_note}`);
+    }
+
+    async function loadPeople() {
+      const interest = document.getElementById('people-filter').value.trim();
+      const url = interest ? `/api/people?interest=${encodeURIComponent(interest)}` : '/api/people';
+      const res = await fetch(url);
+      const data = await res.json();
+      const grid = document.getElementById('people-grid');
+      grid.innerHTML = (data.people || []).map(p => `
+        <div class="card">
+          <div>
+            <span class="badge badge-red">${p.role}</span>
+            ${p.gde_category ? `<span class="badge badge-blue">GDE: ${p.gde_category}</span>` : ''}
+            ${badgeForVerification(p.verification_status)}
+          </div>
+          <h3>${p.full_name}</h3>
+          <div style="font-size:0.84rem;color:var(--pismaniye-gold);margin-bottom:0.4rem;">${p.headline} • ${p.organization}</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.65rem;">${p.bio}</p>
+          <div>${(p.expertise_tags || []).map(t => `<span class="badge badge-purple">${t}</span>`).join('')}</div>
+        </div>
+      `).join('');
+    }
+
+    async function runMatchmakerFromTab() {
+      const interest = document.getElementById('people-filter').value.trim() || 'Agentic AI, Gemini';
+      switchTab('concierge');
+      await runSignatureWorkflow('workflow_a', `I'm interested in ${interest}. Who should I meet?`);
+    }
+
+    async function loadSchedule(buildAgenda = false) {
+      const interest = document.getElementById('agenda-interests').value.trim();
+      const url = (buildAgenda && interest) ? `/api/schedule?interest=${encodeURIComponent(interest)}` : '/api/schedule';
+      const res = await fetch(url);
+      const data = await res.json();
+      document.getElementById('venue-banner').textContent = `📍 Venue: ${data.venue.venue_name} (${data.venue.city}) — ${data.venue.address_note}`;
+
+      const conflictBanner = document.getElementById('conflict-banner');
+      conflictBanner.innerHTML = '';
+      let items = data.sessions || [];
+      if (buildAgenda && data.personalized_agenda) {
+        items = data.personalized_agenda.agenda;
+        const conflicts = data.personalized_agenda.conflicts_resolved || [];
+        if (conflicts.length > 0) {
+          conflictBanner.innerHTML = `<div class="card" style="border-color:var(--g-yellow);margin-bottom:1rem;"><strong>⚖️ Conflict Resolver Active:</strong> ${conflicts.map(c => c.resolution_reason).join(' ')}</div>`;
+        }
+      }
+
+      document.getElementById('schedule-grid').innerHTML = items.map(s => `
+        <div class="card">
+          <div>
+            <span class="badge badge-yellow">${s.time_slot || (s.start_time + '–' + s.end_time)}</span>
+            <span class="badge badge-blue">${s.track}</span>
+            ${badgeForVerification(s.verification_status)}
+          </div>
+          <h3>${s.title}</h3>
+          <div style="font-size:0.83rem;color:var(--accent-cyan);margin-bottom:0.4rem;">📍 ${s.room}</div>
+          <div style="font-size:0.84rem;color:var(--text-secondary);">${s.why_selected || s.abstract}</div>
+        </div>
+      `).join('');
+    }
+
+    async function loadKocaeli() {
+      const hours = document.getElementById('kocaeli-hours').value || 3;
+      const res = await fetch(`/api/kocaeli?hours=${encodeURIComponent(hours)}`);
+      const data = await res.json();
+      document.getElementById('kocaeli-summary').textContent =
+        `⏱️ Planned ${data.itinerary.length} stops fitting cleanly within ${data.available_hours} hours (${data.total_planned_minutes_with_return}/${data.budget_minutes} minutes including 15m return buffer).`;
+
+      document.getElementById('kocaeli-grid').innerHTML = (data.itinerary || []).map((stop, idx) => `
+        <div class="card">
+          <div>
+            <span class="badge badge-green">Stop ${idx + 1} • ${stop.category}</span>
+            <span class="badge badge-yellow">🚌 ${stop.transit_minutes}m + ⏱️ ${stop.visit_duration_minutes}m</span>
+          </div>
+          <h3>${stop.name}</h3>
+          <div style="font-size:0.8rem;color:var(--pismaniye-gold);margin-bottom:0.4rem;">🕒 Hours: ${stop.opening_hours}</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.5rem;">${stop.summary}</p>
+          <div style="font-size:0.82rem;color:var(--accent-cyan);">💡 Tip: ${stop.visitor_tip}</div>
+        </div>
+      `).join('');
+    }
+
+    async function loadCommunity() {
+      const res = await fetch('/api/community');
+      const data = await res.json();
+      document.getElementById('community-list').innerHTML = (data.pathway || []).map(step => `
+        <div class="card">
+          <div>
+            <span class="badge badge-blue">Stage ${step.step_number}: ${step.category}</span>
+            <span class="badge badge-purple">~${step.estimated_hours} hours</span>
+            ${badgeForVerification(step.verification_status)}
+          </div>
+          <h3>${step.title}</h3>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.45rem;">${step.summary}</p>
+          <div style="font-size:0.82rem;color:var(--g-green);">🤝 Contribute: ${step.how_to_contribute}</div>
+          <div style="font-size:0.8rem;color:var(--accent-cyan);margin-top:0.3rem;">🔗 ${step.url}</div>
+        </div>
+      `).join('');
+    }
+
+    async function submitCommunityContribution() {
+      const payload = {
+        submitter_name: document.getElementById('sub-name').value || 'Community Member',
+        title: document.getElementById('sub-title').value,
+        tags: (document.getElementById('sub-tags').value || '').split(',').map(s => s.trim()).filter(Boolean),
+        content: document.getElementById('sub-content').value
+      };
+      if (!payload.title || !payload.content) return;
+      const res = await fetch('/api/community/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      document.getElementById('sub-status').textContent = `✔ Queued as ${data.submission.submission_id} (${data.submission.status})`;
+    }
+
+    function getOrgHeaders() {
+      return {
+        'Content-Type': 'application/json',
+        'X-Organizer-Token': document.getElementById('org-token').value.trim()
+      };
+    }
+
+    async function loadOrganizerAnalytics() {
+      const res = await fetch('/api/organizer/analytics', { headers: getOrgHeaders() });
+      if (!res.ok) {
+        document.getElementById('org-analytics-box').textContent = 'Invalid Organizer RBAC Token.';
+        return;
+      }
+      const data = await res.json();
+      document.getElementById('org-analytics-box').textContent = JSON.stringify(data, null, 2);
+
+      const modRes = await fetch('/api/organizer/moderation', { headers: getOrgHeaders() });
+      const modData = await modRes.json();
+      const modList = document.getElementById('org-moderation-list');
+      modList.innerHTML = (modData.submissions || []).map(sub => `
+        <div style="padding:0.5rem;border:1px solid var(--border-subtle);border-radius:8px;margin-bottom:0.4rem;font-size:0.83rem;">
+          <strong>${escapeHtml(sub.title)}</strong> by ${escapeHtml(sub.submitter_name)} <span class="badge badge-yellow">${escapeHtml(sub.status)}</span>
+          <div style="margin-top:0.35rem;">
+            <button class="success-btn" onclick="moderateItem('${escapeHtml(sub.submission_id)}', 'APPROVED')">Approve & Index</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function moderateItem(subId, decision) {
+      await fetch(`/api/organizer/moderation/${subId}`, {
+        method: 'POST',
+        headers: getOrgHeaders(),
+        body: JSON.stringify({ decision, moderator_note: 'Verified by GDG Kocaeli Organizer' })
+      });
+      await loadOrganizerAnalytics();
+    }
+
+    async function organizerAddSpeaker() {
+      const tags = (document.getElementById('org-spk-tags').value || 'Agentic AI, Gemini').split(',').map(s => s.trim()).filter(Boolean);
+      const payload = {
+        full_name: document.getElementById('org-spk-name').value,
+        headline: document.getElementById('org-spk-headline').value,
+        organization: document.getElementById('org-spk-org').value,
+        bio: document.getElementById('org-spk-bio').value,
+        interests: tags,
+        expertise_tags: tags,
+        technologies: tags,
+        verification_status: 'VERIFIED_ORGANIZER_DATA'
+      };
+      if (!payload.full_name) return;
+      const res = await fetch('/api/organizer/speakers', {
+        method: 'POST',
+        headers: getOrgHeaders(),
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      document.getElementById('org-spk-msg').textContent = `✔ Saved & indexed verified profile: ${data.speaker.full_name}`;
+      await loadOrganizerAnalytics();
+    }
+
+    async function organizerAddSession() {
+      const tags = (document.getElementById('org-sess-tags').value || '').split(',').map(s => s.trim()).filter(Boolean);
+      const payload = {
+        title: document.getElementById('org-sess-title').value,
+        start_time: document.getElementById('org-sess-start').value,
+        end_time: document.getElementById('org-sess-end').value,
+        room: document.getElementById('org-sess-room').value,
+        tags,
+        abstract: document.getElementById('org-sess-abs').value,
+        verification_status: 'VERIFIED_ORGANIZER_DATA'
+      };
+      if (!payload.title) return;
+      await fetch('/api/organizer/sessions', {
+        method: 'POST',
+        headers: getOrgHeaders(),
+        body: JSON.stringify(payload)
+      });
+      await loadOrganizerAnalytics();
+    }
+
+    async function organizerResetEdition() {
+      const payload = {
+        new_event_id: document.getElementById('reset-event-id').value,
+        new_event_name: document.getElementById('reset-event-name').value,
+        new_year: 2027,
+        keep_community_knowledge: true
+      };
+      const res = await fetch('/api/organizer/reset-edition', {
+        method: 'POST',
+        headers: getOrgHeaders(),
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      alert(`✔ Edition reset to ${data.new_event_name} (${data.new_event_id})!\nPreserved ${data.preserved_kocaeli_places} Kocaeli guides & ${data.preserved_community_resources} community resources.`);
+      await loadOrganizerAnalytics();
+    }
+
+    async function exportEventReport() {
+      const res = await fetch('/api/organizer/report', { headers: getOrgHeaders() });
+      const data = await res.json();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pismaniye-report-${data.event_edition.event_id}.json`;
+      a.click();
+    }
+
+    // Run initial concierge showcase on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      submitChat('workflow_a');
+    });
+  </script>
+</body>
+</html>

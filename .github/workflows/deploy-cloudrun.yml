@@ -1,0 +1,49 @@
+name: Deploy PISMANIYE to Google Cloud Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      event_id:
+        description: "Event Edition ID to deploy"
+        required: true
+        default: "devfest-kocaeli-2026"
+      region:
+        description: "Google Cloud Region"
+        required: true
+        default: "europe-west1"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-cloud-run:
+    name: Build & Deploy to Google Cloud Run
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        if: ${{ env.GCP_CREDENTIALS != '' }}
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Deploy to Cloud Run
+        if: ${{ env.GCP_CREDENTIALS != '' }}
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: pismaniye-concierge
+          region: ${{ inputs.region }}
+          source: .
+          env_vars: |
+            PISMANIYE_EVENT_ID=${{ inputs.event_id }}
+            PISMANIYE_MODE=google_cloud
+            GOOGLE_CLOUD_PROJECT=${{ secrets.GCP_PROJECT_ID }}
+            GOOGLE_CLOUD_LOCATION=${{ inputs.region }}
+            PISMANIYE_GEMINI_MODEL=gemini-2.5-flash
+            PISMANIYE_EMBEDDING_MODEL=text-embedding-004

@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "PISMANIYE: Multi-Agent Community Intelligence & Concierge Platform for GDG Kocaeli & DevFest Kocaeli 2026"
+message: "If you use or reference PISMANIYE in your community events, talks, or research, please cite it as below."
+type: software
+authors:
+  - given-names: "Mortadha"
+    family-names: "Mannai"
+    email: "mannaimortadha898@gmail.com"
+    alias: "MortadhaMannai"
+repository-code: "https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026."
+url: "https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026."
+license: Apache-2.0
+version: "1.0.0"
+date-released: "2026-11-08"
+keywords:
+  - Agentic AI
+  - Multi-Agent Systems
+  - LangGraph
+  - Google ADK
+  - Gemini
+  - Hybrid RAG
+  - Explainable AI
+  - GDG Kocaeli
+  - DevFest Kocaeli 2026
