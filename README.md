@@ -54,10 +54,10 @@ Pismaniye powers **two synchronized interfaces**—a **Cinematic Terminal CLI/TU
 <div align="center">
   <img src="assets/architecture-system-diagram.png" alt="PISMANIYE Multi-Agent System Architecture" width="100%" />
 </div>
-
+ 
 ### Interactive Architecture Flowchart
 
-```mermaid
+```mermaid 
 flowchart TD
     subgraph Interfaces["Dual Interfaces"]
         CLI["💻 Cinematic CLI & Textual TUI (`pismaniye`)"]
