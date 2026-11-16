@@ -1,7 +1,7 @@
 <div align="center">
 
 <img src="assets/pismaniye-hero-banner.svg" alt="PISMANIYE — Multi-Agent Community Intelligence Platform" width="100%" />
-
+  
 <br />.   
 
 [![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD-Passing-34A853?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
