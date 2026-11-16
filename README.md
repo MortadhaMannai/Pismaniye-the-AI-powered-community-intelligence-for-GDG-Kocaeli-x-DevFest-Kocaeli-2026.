@@ -184,7 +184,7 @@ flowchart LR
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026..git
+git clone https://github.com/MortadhaMannai/Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026.
 cd Pismaniye-the-AI-powered-community-intelligence-for-GDG-Kocaeli-x-DevFest-Kocaeli-2026.
 
 # 2. Create and activate a Python virtual environment
